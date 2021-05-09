@@ -44,18 +44,18 @@ The first thing can be easily observed is that this allocator does not follow th
 ### slot
 By reading the source code and inspecting the memory, we found out that the atomic structure in `mallocng` is called `slot`.
 It looks like this in memory:
-![slot](resource/defcon_qual21/slot.png)
+![slot](https://github.com/Kyle-Kyle/blog/raw/master/_posts/resource/defcon_qual21/slot.png)
 The first 0x10 bytes is the encoded metadata of the `slot`, after that, everything belongs to users. In the metadata, only two bytes are important for us: 0x08(`p[-2]`) and 0xa2(`p[-3]`) in the picture above.
 `p[-2]` represents `offset`, `p[-3] & 31` represents `index`.
 
 ### group
 A `group` consists of several `slots` of the same size. A `group` looks like this in memory:
-![group](resource/defcon_qual21/group.png)
+![group](https://github.com/Kyle-Kyle/blog/raw/master/_posts/resource/defcon_qual21/group.png)
 The metadata of the first `slot` in a `group` contains a pointer pointing to the real metadata of this `group`. Other `slot`-s use their `offset` to recover the metadata pointer to access the metadata of the `group`. It is done through the formula `p-offset*UNIT` where `UNIT` is fixed to be 0x10. The `index` of a `slot` represents its position in the `group`. In other words, a `slot` can be precisely represented by a `(group, index)` tuple.
 
 ### meta
 Now let's have a look at the `group` metadata. It looks like this in memory:
-![meta](resource/defcon_qual21/meta.png)
+![meta](https://github.com/Kyle-Kyle/blog/raw/master/_posts/resource/defcon_qual21/meta.png)
 It uses `mem` to keep track of the location of the `group` and uses `sizeclass` to keep track of the size of the `slot` in the `group`. `freed_mask` and `avail_mask` are bitmaps of freed `slots` and availble but haven't been allocated yet `slots` respectively.
 
 ### meta_area

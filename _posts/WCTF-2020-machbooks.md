@@ -13,6 +13,8 @@ As the name suggests, it is a Mach-O challenge. Mach-O is the binary format on m
 Because of the rarity of Mach-O challenges, some CTF-ready tools do not work on the binary format and not many people know how to deal with Mach-O binaries at all. Those may be the reasons why there was only one solve during the game.
 Luckily, I was exposed to Mach-O by a challenge called `applepie` during 0CTF-2019. And that experience gave me an edge to finish the only solve to the challenge during the game.
 
+<!-- more -->
+
 To contribute to the CTF community, I'd like to share my solution and share my knowledge about Mach-O. And hopefully we are going to have more diversity for PWN challenges.
 
 # Background
