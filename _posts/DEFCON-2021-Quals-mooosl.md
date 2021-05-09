@@ -9,7 +9,7 @@ tags:
 ---
 
 # Introduction
-Last week, I played DEFCON quals with my team Shellphish. We managed to get to 10th place worldwide and qualified for DEFCON Final this year. Good job everyone! More importantly, this is the 16th year that Shellphish gets qualified for DEFCON Final in a row. What can I say? It's just amazing.
+Last week, I played DEFCON quals with my team Shellphish. We managed to get to 10th place worldwide and qualified for DEFCON Final this year. Good job everyone! More importantly, this is the 16th year that Shellphish gets qualified for DEFCON Final consecutively in a row. What can I say? It's just amazing.
 During the CTF, I contributed to the solution of `baby-a-fallen-lap-ray`(or, `parallel-af-yan`). After we solved it, I started looking at `mooosl`, which is a heap challenge with musl[1] libc. When I started to look at the challenge seriously, there were only 6 hours left. At the end of the CTF, I almost got everything, just needed some time to finish it off.
 In fact, after the CTF, it only took me 2.5 more hours to finally get the flag. So sad.
 So, in this blog, I'm going to talk about how to solve the challenge and help myself remember how `musl`'s `mallocng` allocator works.
@@ -139,6 +139,8 @@ What we can do is to use the arbitrary allocation to overwrite its `write` point
 # Conclusion
 I had fun with the challenge. Although I didn't solve it in time. If only I didn't sleep 7 hours straight after solving `parallel-af-yan`. So sad.
 It and also tells me why comment is important in programming. The `mallocng` source code is very badly commented, which caused a lot of troubles for me to understand how it works.
+
+The full script can be found [here](https://github.com/Kyle-Kyle/blog/tree/master/writeups/defcon21_mooosl)
 
 # Reference
 [1] https://www.musl-libc.org/
