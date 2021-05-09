@@ -61,7 +61,7 @@ It uses `mem` to keep track of the location of the `group` and uses `sizeclass` 
 ### meta_area
 Interestingly, to make sure every `meta` struct in use is valid and not crafted by attackers, `mallocng` implements a verification mechanism that ensures the `meta` struct is at an protected `meta_area`.
 `meta_area` looks like this in memory:
-![meta](resource/defcon_qual21/meta_area.png)
+![meta](https://github.com/Kyle-Kyle/blog/raw/master/_posts/resource/defcon_qual21/meta_area.png)
 Whenever a `meta` struct is used, it clears the last 12 bits of its pointer to recover its `meta_area` and ensure the `check` value is the same as the initialized random value.
 
 ### __malloc_context
