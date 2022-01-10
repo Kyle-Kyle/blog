@@ -20,7 +20,7 @@ Even though my solution was much harder than the intended solution, it was the f
 # Challenge
 Now let me briefly discribe what kind of challenge it is.
 
-Different from normal Linux kernel challenges where players deal with compiled kernel modules, this challenge implements a new system call `ips` and the source code of this system call is given. The source code is quite short, interested readers can find the source code [here](xxx).
+Different from normal Linux kernel challenges where players deal with compiled kernel modules, this challenge implements a new system call `ips` and the source code of this system call is given. The source code is quite short, interested readers can find the source code [here](https://github.com/Kyle-Kyle/blog/blob/master/writeups/vulncon21_ips/ips.c).
 
 Basically, it implements a service that allows users to allocate/remove/edit/copy some data in kernel space (just like heap challenges in userspace lol).
 The logic looks like this:
@@ -141,7 +141,7 @@ After understanding the protection, the exploitation plan is clear: leak a kerne
 ## OOB-Read
 With the UAF primitive in hand, I decided to try out the `msg_msg` attack first to get info leak.
 This is an attack that has been quite popular among Linux kernel exploit writers for a while.
-It provides immediate OOB-Read and Arbitrary-Free primitive ([source1](xxx), [source2](xxx)). It has also been demonstrated to be able to used to gain Arbitrary-Read/Write in some settings ([source1](xx), [source2](xxx)).
+It provides immediate OOB-Read and Arbitrary-Free primitive ([source1](https://syst3mfailure.io/wall-of-perdition), [source2](https://a13xp0p0v.github.io/2021/02/09/CVE-2021-26708.html)). It has also been demonstrated to be able to used to gain Arbitrary-Read/Write in some settings ([source1](https://syst3mfailure.io/wall-of-perdition), [source2](https://www.willsroot.io/2021/08/corctf-2021-fire-of-salvation-writeup.html)).
 
 I'll only briefly talk about how this attack works here, interested readers can follow the links provided above for further readings.
 
@@ -332,7 +332,7 @@ Bypassing SMEP and SMAP is not hard either, it only requires pivoting stack to h
 # Conclusion
 This challenge is not hard. Yet, I still struggled a little bit. Anyway, I like this challenge because I learnt something from it :D
 
-The full exploit can be found [here](xxx).
+The full exploit can be found [here](https://github.com/Kyle-Kyle/blog/blob/master/writeups/vulncon21_ips/exp.c).
 
 # Fun Fact
 I was supposed to write this blog a month ago since the exploitation is interesing. But I completely forgot about it because my attention was drawn to kCTF.
