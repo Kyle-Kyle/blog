@@ -336,4 +336,4 @@ The full exploit can be found [here](https://github.com/Kyle-Kyle/blog/blob/mast
 
 # Fun Fact
 I was supposed to write this blog a month ago since the exploitation is interesing. But I completely forgot about it because my attention was drawn to kCTF.
-Until yesterday, the author of the challenge @BitFriends contacted me, asking about the details of my unintended solution, I was reminded that I still had a blog to finish. And now here it is. Thank you for reminding me @BitFriends!
+Until yesterday, the author of the challenge @BitFriends contacted me, asking about the details of my unintended solution, I was reminded that I still had a blog to finish. And now here it is. Thank you for reminding me @BitFriends and thank you for the challenge!
