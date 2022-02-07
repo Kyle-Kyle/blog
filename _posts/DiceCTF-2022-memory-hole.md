@@ -1,5 +1,5 @@
 ---
-title: '[DiceCTF 2021] - memory hole'
+title: '[DiceCTF 2022] - memory hole'
 date: 2022-02-06 15:11:55
 tags:
 - CTF
