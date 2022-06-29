@@ -3,6 +3,9 @@ title: About
 date: 2022-04-01 19:35:10
 ---
 
+<span style="color:red">News!</span> Won Linux Kernel LPE Category at TyphoonPWN hacking competition.
+<span style="color:red">News!</span> Awarded $71,337 bounty from Google kCTF VRP program.
+<span style="color:red">News!</span> Awarded $51,337 bounty from Google kCTF VRP program.
 <span style="color:red">News!</span> Two papers accepted in USENIX 2022.
 <span style="color:red">News!</span> One paper accepted in RAID 2021.
 <span style="color:red">News!</span> One paper accepted in NDSS 2021.
@@ -40,12 +43,14 @@ Yanhao Wang, Xiangkun Jia, Yuwei Liu, **Kyle Zeng**, Tiffany Bao, Dinghao Wu, Pu
 San Diego, CA February 2020.
 
 # Honors & Awards
+* Winner of Linux PE Category at TyphoonPWN 2022, SSD Secure Disclosure, Jun. 2022
+* kCTF VRP Program (CVE-2022-29581, with Zhenpeng Lin, $71,337 Bounty), Google, Apr. 2022
 * SCAI Doctoral Fellowship, Arizona State University, Mar. 2022
-* kCTF VRP program ($50,000 Bounty), Google, Dec. 2021
-* 14th place in DEF CON 29 CTF (Shellphish), Las Vegas, USA, Aug. 2021
-* 7th place in DEF CON 28 CTF (Shellphish), Virtual, Aug. 2020
+* kCTF VRP Program (with Zhenpeng Lin, $51,337 Bounty), Google, Dec. 2021
+* 14th Place in DEF CON 29 CTF (Shellphish), Las Vegas, USA, Aug. 2021
+* 7th Place in DEF CON 28 CTF (Shellphish), Virtual, Aug. 2020
 * Engineering Graduate Fellowship, Arizona State University, Apr. 2020
-* 10th place in DEF CON 27 CTF (Shellphish), Las Vegas, USA, Aug. 2019
+* 10th Place in DEF CON 27 CTF (Shellphish), Las Vegas, USA, Aug. 2019
 * Cybersecurity Fellowship, Arizona State University, Aug. 2019
 
 # Community Services
