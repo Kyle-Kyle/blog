@@ -20,6 +20,8 @@ The story is so interesting that I have to share it.
 
 Spoiler: the answer to life the universe and everything is ~~42~~ `angr`.
 
+<!-- more -->
+
 # Eternal war in File Structures
 
 File structure (`FILE`) is a data structure provided by glibc to assist programmers in processing files. Internally, glibc has an extended data structure `struct _IO_FILE_plus` for the ease of implementation.
@@ -73,7 +75,7 @@ So, is that still possible to get PC-control directly with a controlled file str
 
 My first thought was: there shouldn't be too many vtables in libc so not too many function pointers we can invoke from a controlled file structure (using the misaligned vtable), I could just disassemble all of them and search for `call`/`jmp` and see whether there are any missing checks.
 
-You can find the disassemby output [here](https://github.com/Kyle-Kyle/blog/raw/master/_posts/resource/angry-fsrop/disassembly.txt).
+You can find the disassemby output [here](https://github.com/Kyle-Kyle/blog/blob/master/_posts/resource/angry-fsrop/disassembly.txt).
 
 Basically, there are only 81 unique function pointers in the libc vtable section. I disassembled all of them and all the indirect function calls that I checked were either encrypted or invoked from validated vtables.
 
@@ -120,6 +122,8 @@ Then I added a simple filter like `simgr.move("unconstrained", "bad", filter_fun
 Cool! The scipt was still in a terrible state and it found a new technique already? I enhanced it a bit and let it run over-night. The next day, `angr` reported at least 9 new techniques.
 
 I didn't triage all of them and also don't want to name all of them. So, I decided to call the class of techniques `angry-FSROP` (file structure ROP techniques discovered by `angr`).
+
+The full script can be found [here](https://github.com/Kyle-Kyle/angry-FSROP/blob/main/angry-fsrop.py) (it is very dirty and can cause damage to your eyes. Proceed with caution, you have been warned).
 
 # angry-FSROP Case Study
 
