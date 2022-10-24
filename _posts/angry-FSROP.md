@@ -11,7 +11,7 @@ tags:
 # Introduction
 The story began with a student, Ramen, asking me about the status of file structure attacks nowadays two days ago. He told me there were no public attacks that grant PC-control solely from file structure attacks in glibc-2.35 and I was a bit skeptical about it because I have heard about many techniques that can successfully leads to shells in CTFs.
 
-After reading all the writeups, it turned out he was kinda right (I shouldn't have underestimated the technical skills of a blue-belt holder on pwn.college). These known techniques need to chain a ton of tricks together and the use of file structures are no longer as clean and powerful as in the past. (@angelboy's arbitrary read/write technique based on file structure buffers still works fine, but does not provide PC-control)
+After reading all the writeups, it turned out he was right (I shouldn't have underestimated the technical skills of a blue-belt holder on pwn.college). These known techniques need to chain a ton of tricks together and the use of file structures are no longer as clean and powerful as in the past. (@angelboy's arbitrary read/write technique based on file structure buffers still works fine, but does not provide PC-control)
 
 Then, I started wondering a higher-level question: with hooks obsolete (e.g. `__malloc_hook`, `__free_hook`) in the latest glibc, is there any clean way to obtain PC-control directly in libc?
 Since I just finished my previous projects and my new projects haven't started yet, I'm basically free (Dobby is free!). So I dedicated a few hours on this question and resulted in a class of techniques that can grant us PC-control given 1. known libc base 2. a fully controlled file structure, despite the presence of vtable checks in glibc.
