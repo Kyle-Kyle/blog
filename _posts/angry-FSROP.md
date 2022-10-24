@@ -9,12 +9,12 @@ tags:
 ---
 
 # Introduction
-The story began with a student, Ramen, asking me about the status of file structure attacks nowadays two days ago. He told me there were no public attacks that grant PC-control solely from file structure attacks in glibc-2.35 and I was a bit skeptical about it because I have heard about many techniques that can successfully leads to shells in CTFs.
+The story began with a student, Ramen, asking me about the status of file structure attacks nowadays two days ago. He told me there were no public attacks that grant PC-control solely from file structure attacks in glibc-2.35 and I was a bit skeptical about it because I have heard about many techniques that can successfully lead to shells in CTFs.
 
 After reading all the writeups, it turned out he was right (I shouldn't have underestimated the technical skills of a blue-belt holder on pwn.college). These known techniques need to chain a ton of tricks together and the use of file structures are no longer as clean and powerful as in the past. (@angelboy's arbitrary read/write technique based on file structure buffers still works fine, but does not provide PC-control)
 
 Then, I started wondering a higher-level question: with hooks obsolete (e.g. `__malloc_hook`, `__free_hook`) in the latest glibc, is there any clean way to obtain PC-control directly in libc?
-Since I just finished my previous projects and my new projects haven't started yet, I'm basically free (Dobby is free!). So I dedicated a few hours on this question and resulted in a class of techniques that can grant us PC-control given 1. known libc base 2. a fully controlled file structure, despite the presence of vtable checks in glibc.
+Since I just finished my previous projects and my new projects haven't started yet, I'm basically free (Dobby is free!). So I dedicated a few hours to this question and resulted in a class of techniques that can grant us PC-control given 1. known libc base 2. a fully controlled file structure, despite the presence of vtable checks in glibc.
 
 The story is so interesting that I have to share it.
 
@@ -51,7 +51,7 @@ IO_validate_vtable (const struct _IO_jump_t *vtable)
   return vtable;
 }
 ```
-In short, this protection make sure the `vtable` have to be within the `__libc_IO_vtables` section, or the process will exit.
+In short, this protection makes sure the `vtable` have to be within the `__libc_IO_vtables` section, or the process will exit.
 Worse still, they also encrypt some function pointers that are inevitable in file structure so that PC-control cannot be obtained unless the encryption key is leaked (which is stored in thread local storage).
 
 CTFers soon came up with a bypass. The key is that the check only makes sure the `vtable` is within the range, which means we can still misalign the `vtable` pointer so that different function pointers with `__libc_IO_vtables` section can be invoked. (Plz keep this in mind, this is important.)
@@ -73,11 +73,11 @@ So, is that still possible to get PC-control directly with a controlled file str
 
 # Manual Auditing
 
-My first thought was: there shouldn't be too many vtables in libc so not too many function pointers we can invoke from a controlled file structure (using the misaligned vtable), I could just disassemble all of them and search for `call`/`jmp` and see whether there are any missing checks.
-
-You can find the disassemby output [here](https://github.com/Kyle-Kyle/blog/blob/master/_posts/resource/angry-fsrop/disassembly.txt).
+My first thought was: there shouldn't be too many vtables in libc, so not too many function pointers, we can invoke from a controlled file structure (using the misaligned vtable), we could just disassemble all of them and search for `call`/`jmp` and see whether there are any missing checks.
 
 Basically, there are only 81 unique function pointers in the libc vtable section. I disassembled all of them and all the indirect function calls that I checked were either encrypted or invoked from validated vtables.
+
+The disassemby output can be found [here](https://github.com/Kyle-Kyle/blog/blob/master/_posts/resource/angry-fsrop/disassembly.txt).
 
 For example, the following is the disassembly of `_IO_cookie_close`:
 ```
@@ -90,7 +90,7 @@ For example, the following is the disassembly of `_IO_cookie_close`:
    7f8ad:       mov    rdi, QWORD PTR [rdi+0xe0]
    7f8b4:       jmp    rax   
    7f8b6:       cs nop WORD PTR [rax+rax*1+0x0]
-   7f8c0:       eax, eax
+   7f8c0:       xor    eax, eax
    7f8c2:       ret
 ```
 
