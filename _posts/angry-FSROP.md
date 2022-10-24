@@ -106,7 +106,7 @@ So not too bad.
 
 But man, this is lame. With control over file structure, such a complicated data structure, and we cannot even hijack the control flow directly?
 
-With a little bit of thinking, I realized that this is a bounded model checking problem: given a fully controlled file structure, can we propagate the controlled data to `rip` through one of the 81 functions?
+With a little bit of thinking, I realized that this is a bounded model checking problem: given a fully controlled file structure, can we propagate the controlled data to `rip` through one of the 81 functions (with a fixed number of steps)?
 
 Apparently, this question is something that `angr` is able to answer and it just happens that I am a ~~master~~ PhD of `angr`. So, I decided to give `angr` a shot.
 
