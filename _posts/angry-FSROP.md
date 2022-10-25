@@ -9,7 +9,7 @@ tags:
 ---
 
 # Introduction
-The story began with a student, Ramen, asking me about the status of file structure attacks nowadays two days ago. He told me there were no public attacks that grant PC-control solely from file structure attacks in glibc-2.35 and I was a bit skeptical about it because I have heard about many techniques that can successfully lead to shells in CTFs.
+The story began with a student, @Ramen, asking me about the status of file structure attacks nowadays two days ago. He told me there were no public attacks that grant PC-control solely from file structure attacks in glibc-2.35 and I was a bit skeptical about it because I have heard about many techniques that can successfully lead to shells in CTFs.
 
 After reading all the writeups, it turned out he was right (I shouldn't have underestimated the technical skills of a blue-belt holder on pwn.college). These known techniques need to chain a ton of tricks together and the use of file structures are no longer as clean and powerful as in the past. (@angelboy's arbitrary read/write technique based on file structure buffers still works fine, but does not provide PC-control)
 
@@ -180,4 +180,19 @@ call   QWORD PTR [rdx+0x20]
 I used `angr` to find a class of file structure attack techniques that can grant PC-control despite the presence of the vtable check.
 
 I only manually verified one of them. If you verify more instances, please let me know :D
+
+# Follow up
+After the blog was posted, I was informed that there are existing techniques on getting PC-control using file structure: @roderick01 proposed [house-of-apple2](https://bbs.pediy.com/thread-273832.htm) a few months ago, which contains three chains (two are the same ones as what I manually validated) to achieve it. And all of the three relied on the fact that the `_wide_vtable` is not validated.
+
+Then I got interested: among all the techniques (at least 9) that `angr` found, how many do not rely on the fact that `_wide_vtable` is not validated?
+I did not have a direct way to measure it, so I used an indirect approach: how many symbolic states have constraints on `_wide_data` (the object that contains `_wide_vtable`) using the following snippet:
+```
+for func in state_dict:
+    print(func)
+    for idx, state in enumerate(state_dict[func]):
+        if 'wide_data' not in state.solver._solver.variables:
+            print(idx, state)
+```
+
+The result shows that all the states have constraints on `_wide_data`, which means it is likely that all of them get PC-control through `_wide_vtable`. In other words, if the developers add the vtable check to `_wide_vtable`, it is likely that all the techniques will be killed (but you never know whether `angr` will find something new after the patch ;) ).
 
