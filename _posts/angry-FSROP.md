@@ -119,7 +119,7 @@ And indeed, just within one minute, `angr` starts flooding the console with "unc
 This was encouraging but not so useful: we want to find new techniques directly from file structure attacks without other primitives. In other words, we want the PC-control to be a plain symbolic value instead of an AST tree.
 Then I added a simple filter like `simgr.move("unconstrained", "bad", filter_func=lambda state: state.regs.pc.depth > 1)`, and went out for coffee. When I came back, `angr` found a path in `_IO_wfile_seekoff->_IO_switch_to_wget_mode->_IO_WOVERFLOW`. I manually confirmed this path works.
 
-Cool! The scipt was still in a terrible state and it found a new technique already? I enhanced it a bit and let it run over-night. The next day, `angr` reported at least 9 new techniques.
+Cool! The script was still in a terrible state and it found a new technique already? I enhanced it a bit and let it run over-night. The next day, `angr` reported at least 9 new techniques.
 
 I didn't triage all of them and also don't want to name all of them. So, I decided to call the class of techniques `angry-FSROP` (file structure ROP techniques discovered by `angr`).
 
@@ -194,5 +194,8 @@ for func in state_dict:
             print(idx, state)
 ```
 
-The result shows that all the states have constraints on `_wide_data`, which means it is likely that all of them get PC-control through `_wide_vtable`. In other words, if the developers add the vtable check to `_wide_vtable`, it is likely that all the techniques will be killed (but you never know whether `angr` will find something new after the patch ;) ).
+~~The result shows that all the states have constraints on `_wide_data`, which means it is likely that all of them get PC-control through `_wide_vtable`. In other words, if the developers add the vtable check to `_wide_vtable`, it is likely that all the techniques will be killed (but you never know whether `angr` will find something new after the patch ;) ).~~
+
+# Follow up to the Follow up
+It turns out my previous conclusion that all the chains found by `angr` rely on `_wide_data` is wrong. By tweaking the the script a little bit, `angr` is able to find chains without relying on `_wide_data`. The new script (that was used to solve a hacklu challenge) can be found [here](https://github.com/Kyle-Kyle/angry-FSROP/blob/main/hacklu_solve.py).
 
