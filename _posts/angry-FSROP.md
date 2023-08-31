@@ -197,5 +197,7 @@ for func in state_dict:
 ~~The result shows that all the states have constraints on `_wide_data`, which means it is likely that all of them get PC-control through `_wide_vtable`. In other words, if the developers add the vtable check to `_wide_vtable`, it is likely that all the techniques will be killed (but you never know whether `angr` will find something new after the patch ;) ).~~
 
 # Follow up to the Follow up
-It turns out my previous conclusion that all the chains found by `angr` rely on `_wide_data` is wrong. By tweaking the the script a little bit, `angr` is able to find chains without relying on `_wide_data`. The new script (that was used to solve a hacklu challenge) can be found [here](https://github.com/Kyle-Kyle/angry-FSROP/blob/main/hacklu_solve.py).
+It turns out my previous conclusion that all the chains found by `angr` rely on `_wide_data` is wrong. The reason why `_wide_data` exists in all the state constraints is that `angr` will concretize `_wide_data` to either NULL or a real pointer, which does not have to imply that the technique relies on `_wide_data`.
+
+By removing the dependency on `_wide_data`(by concretizing it by ourselves), `angr` is still able to find 7 chains (which surprises me, it's just too many). One of them are exactly the same as @nobodyisnobody's [chain](https://github.com/nobodyisnobody/write-ups/tree/main/Hack.lu.CTF.2022%2Fpwn%2Fbyor). I manually verified another starting from `_IO_file_finish` and it worked. The new script (that was used to solve a hacklu challenge) can be found [here](https://github.com/Kyle-Kyle/angry-FSROP/blob/main/hacklu_solve.py).
 
